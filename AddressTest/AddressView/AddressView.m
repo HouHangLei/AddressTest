@@ -116,6 +116,9 @@
         [weakSelf.tableView2 removeFromSuperview];
         weakSelf.tableView2 = nil;
         
+        [weakSelf.tableView3 removeFromSuperview];
+        weakSelf.tableView3 = nil;
+        
         weakSelf.datasArr1 = cityVO.cities;
         weakSelf.tableView2.hidden = NO;
         
