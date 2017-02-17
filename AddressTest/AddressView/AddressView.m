@@ -282,6 +282,7 @@
         _tableView3 = [[AddressTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH *2, 0, SCREEN_WIDTH, self.scrollView.frame.size.height) withParmas:self.datasArr2];
         _tableView3.block = ^(NSInteger row){
             
+            [weakSelf tapClick];
             weakSelf.block([NSString stringWithFormat:@"%@ %@ %@",weakSelf.stateLabel.text,weakSelf.cityLabel.text,weakSelf.datasArr2[row]]);
         };
         [self.scrollView addSubview:_tableView3];

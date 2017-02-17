@@ -14,6 +14,8 @@
 #import "AddressView.h"
 @interface ViewController ()
 
+@property (nonatomic, strong) UIButton *btn;
+
 @end
 
 @implementation ViewController
@@ -25,10 +27,13 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    btn.backgroundColor = [UIColor redColor];
-    [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
+    self.btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, SCREEN_WIDTH -200, 50)];
+    self.btn.backgroundColor = [UIColor grayColor];
+    [self.btn setTitle:@"点击选择地址" forState:UIControlStateNormal];
+    self.btn.titleLabel.numberOfLines = 0;
+    self.btn.titleLabel.font = [UIFont systemFontOfSize:15.f];
+    [self.btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.btn];
 }
 
 - (void)btnClick{
@@ -36,7 +41,7 @@
     AddressView *addressView = [[AddressView alloc] initWithFrame:CGRectMake(0, 0, [UIApplication sharedApplication].keyWindow.frame.size.width, [UIApplication sharedApplication].keyWindow.frame.size.height)];
     addressView.block = ^(NSString *addressStr){
     
-        
+        [self.btn setTitle:addressStr forState:UIControlStateNormal];
     };
     [addressView showView:self.view];
     
