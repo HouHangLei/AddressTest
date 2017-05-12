@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "AddressTableView.h"
+#import "CityVO.h"
+#import "CitiesVO.h"
 
 typedef void(^returnBlock)(NSString *addressStr);
 @interface AddressView : UIView <UIScrollViewDelegate>
@@ -45,6 +47,16 @@ typedef void(^returnBlock)(NSString *addressStr);
 @property (nonatomic, strong) AddressTableView *tableView1;
 @property (nonatomic, strong) AddressTableView *tableView2;
 @property (nonatomic, strong) AddressTableView *tableView3;
+
+/**
+ 记录点击的第一个的VO
+ */
+@property (nonatomic, strong) CityVO *oneCityVo;
+
+/**
+ 记录点击的第二个的VO
+ */
+@property (nonatomic, strong) CitiesVO *twoCitiesVO;
 
 
 /**

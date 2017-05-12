@@ -13,8 +13,6 @@
 
 #import "AddressView.h"
 #import "MJExtension.h"
-#import "CityVO.h"
-#import "CitiesVO.h"
 #import "AppUtils.h"
 @implementation AddressView
 
@@ -99,8 +97,9 @@
         [weakSelf.cityLabel removeFromSuperview];
         weakSelf.cityLabel = nil;
         
-        CityVO *cityVO = weakSelf.datasArr[row];
-        weakSelf.stateLabel.frame = CGRectMake(0, 55 *IPHONE6_SIZE, 30 + [AppUtils widthOfString:cityVO.state font:15 height:30 *IPHONE6_SIZE], 30 *IPHONE6_SIZE);
+        weakSelf.oneCityVo = weakSelf.datasArr[row];
+        
+        weakSelf.stateLabel.frame = CGRectMake(0, 55 *IPHONE6_SIZE, 30 + [AppUtils widthOfString:weakSelf.oneCityVo.state font:15 height:30 *IPHONE6_SIZE], 30 *IPHONE6_SIZE);
         
         [UIView animateWithDuration:0.5 animations:^{
             
@@ -108,7 +107,7 @@
             weakSelf.redLineView.frame = CGRectMake(CGRectGetMinX(weakSelf.selectLabel.frame) +15, CGRectGetMaxY(weakSelf.selectLabel.frame), 45, 1);
         } completion:^(BOOL finished) {
             
-            weakSelf.stateLabel.text = cityVO.state;
+            weakSelf.stateLabel.text = weakSelf.oneCityVo.state;
         }];
         
         weakSelf.scrollView.contentSize = CGSizeMake(SCREEN_WIDTH *2, weakSelf.scrollView.frame.size.height);
@@ -119,7 +118,7 @@
         [weakSelf.tableView3 removeFromSuperview];
         weakSelf.tableView3 = nil;
         
-        weakSelf.datasArr1 = cityVO.cities;
+        weakSelf.datasArr1 = weakSelf.oneCityVo.cities;
         weakSelf.tableView2.hidden = NO;
         
         [weakSelf.scrollView setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:YES];
@@ -245,9 +244,9 @@
         _tableView2 = [[AddressTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, self.scrollView.frame.size.height) withParmas:self.datasArr1];
         _tableView2.block = ^(NSInteger row){
         
-            CitiesVO *citiesVO = weakSelf.datasArr1[row];
-            
-            weakSelf.cityLabel.frame = CGRectMake(CGRectGetMaxX(weakSelf.stateLabel.frame), 55 *IPHONE6_SIZE, 30 + [AppUtils widthOfString:citiesVO.city font:15 height:30 *IPHONE6_SIZE], 30 *IPHONE6_SIZE);
+            weakSelf.twoCitiesVO = weakSelf.datasArr1[row];
+
+            weakSelf.cityLabel.frame = CGRectMake(CGRectGetMaxX(weakSelf.stateLabel.frame), 55 *IPHONE6_SIZE, 30 + [AppUtils widthOfString:weakSelf.twoCitiesVO.city font:15 height:30 *IPHONE6_SIZE], 30 *IPHONE6_SIZE);
 
             [UIView animateWithDuration:0.5 animations:^{
                 
@@ -255,14 +254,14 @@
                 weakSelf.redLineView.frame = CGRectMake(CGRectGetMinX(weakSelf.selectLabel.frame) +15, CGRectGetMaxY(weakSelf.selectLabel.frame), 45, 1);
             } completion:^(BOOL finished) {
                 
-                weakSelf.cityLabel.text = citiesVO.city;
+                weakSelf.cityLabel.text = weakSelf.twoCitiesVO.city;
             }];
             
             weakSelf.scrollView.contentSize = CGSizeMake(SCREEN_WIDTH *3, weakSelf.scrollView.frame.size.height);
             [weakSelf.scrollView setContentOffset:CGPointMake(SCREEN_WIDTH *2, 0) animated:YES];
            
 
-            weakSelf.datasArr2 = citiesVO.areas;
+            weakSelf.datasArr2 = weakSelf.twoCitiesVO.areas;
             
             [weakSelf.tableView3 removeFromSuperview];
             weakSelf.tableView3 = nil;
@@ -286,7 +285,7 @@
         _tableView3.block = ^(NSInteger row){
             
             [weakSelf tapClick];
-            weakSelf.block([NSString stringWithFormat:@"%@ %@ %@",weakSelf.stateLabel.text,weakSelf.cityLabel.text,weakSelf.datasArr2[row]]);
+            weakSelf.block([NSString stringWithFormat:@"%@ %@ %@",weakSelf.oneCityVo.state,weakSelf.twoCitiesVO.city,weakSelf.datasArr2[row]]);
         };
         [self.scrollView addSubview:_tableView3];
     }
